@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{192e1d6a-df67-4f70-9e1b-b45237104227}</UniqueIdentifier>
+      <Extensions>h;inl</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0ce7dcd6-e6a9-4fb0-a9e5-c7407ba2bdf4}</UniqueIdentifier>
+      <Extensions>cpp</Extensions>
+    </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{31910523-6685-4aae-980e-1f536302e31b}</UniqueIdentifier>
+      <Extensions>htm</Extensions>
+    </Filter>
+    <Filter Include="Copyright">
+      <UniqueIdentifier>{49526d67-a37d-4d79-b718-7937c327f3cc}</UniqueIdentifier>
+      <Extensions>txt</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdifm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MarcCommonsForFF\MarcExportFFdataNCDF4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MarcCommonsForFF\MarcGeneralFEFLOWtools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PaleoSea2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PaleoSea2D.htm">
+      <Filter>Documentation</Filter>
+    </None>
+    <None Include="PaleoSea2D.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="PaleoSea2D.txt">
+      <Filter>Copyright</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PaleoSea2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

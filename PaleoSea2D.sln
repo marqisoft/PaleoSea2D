@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PaleoSea2D", "PaleoSea2D\PaleoSea2D.vcxproj", "{271EA662-B696-4C80-8A52-FB5A933985AE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08} = {381326B5-2D8C-483B-B6C2-64D5085F7A08}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ifm", "..\..\..\..\..\Public\Documents\DHI FEFLOW 7.1\sdk\ifm\lib\ifm.vcxproj", "{381326B5-2D8C-483B-B6C2-64D5085F7A08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|X64 = Debug|X64
+		Debug|x86 = Debug|x86
+		Release|X64 = Release|X64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Debug|X64.ActiveCfg = Debug|X64
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Debug|X64.Build.0 = Debug|X64
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Debug|x86.ActiveCfg = Debug|Win32
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Debug|x86.Build.0 = Debug|Win32
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Release|X64.ActiveCfg = Release|X64
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Release|X64.Build.0 = Release|X64
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Release|x86.ActiveCfg = Release|Win32
+		{271EA662-B696-4C80-8A52-FB5A933985AE}.Release|x86.Build.0 = Release|Win32
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Debug|X64.ActiveCfg = Debug|x64
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Debug|X64.Build.0 = Debug|x64
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Debug|x86.ActiveCfg = Debug|Win32
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Debug|x86.Build.0 = Debug|Win32
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Release|X64.ActiveCfg = Release|x64
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Release|X64.Build.0 = Release|x64
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Release|x86.ActiveCfg = Release|Win32
+		{381326B5-2D8C-483B-B6C2-64D5085F7A08}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
