@@ -8,6 +8,8 @@ public:
   ~Cpaleosea2d();
   static Cpaleosea2d* FromHandle(IfmDocument pDoc);
 
+  int editmenu_nEnum;
+
 #pragma region IFM_Definitions
   // Implementation
 public:

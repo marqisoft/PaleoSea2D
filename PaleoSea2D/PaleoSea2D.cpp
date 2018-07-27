@@ -36,6 +36,8 @@ x Solve/debug the memory issue bug which occurs when the plugin is used twice by
 
 IfmModule g_pMod;  /* Global handle related to this plugin */
 
+#define countof(x) (sizeof(x)/sizeof(*(x)))
+
 #pragma region IFM_Definitions
 /* --- IFMREG_BEGIN --- */
 /*  -- Do not edit! --  */
@@ -60,7 +62,7 @@ static IfmBool OnTimeStepConstraint (IfmDocument, double, double*);
  * Enter a short description between the quotation marks in the following lines:
  */
 static const char szDesc[] = 
-  "This is Marc's elaborate plugin for running postglacial palaeo simulations (4rd gen. -03/2018)";
+  "This is Marc's elaborate plugin for running postglacial paleo-hydrogeological simulations (4rd gen. -03/2018)";
 
 #ifdef __cplusplus
 extern "C"
@@ -437,6 +439,7 @@ static void OnEndDocument (IfmDocument pDoc)
 // Constructor
 Cpaleosea2d::Cpaleosea2d (IfmDocument pDoc)
   : m_pDoc(pDoc)
+  , editmenu_nEnum(6)
 {
   /*
    * TODO: Add your own code here ...
@@ -879,11 +882,73 @@ void Cpaleosea2d::Serialize (IfmDocument pDoc, IfmArchive pArc)
    */
 }
 
+void CreateUserData_forPaleoSea2D(IfmDocument pDoc)
+{
+	std::string nodals[11] = { "nodefacies", "hdensadd", "Yoftoprock", "globxiraw", "clayyimain", "clayyisub", "clayxiraw", "rndnormN", "hsteady0", "cinit0noisy", "exportnodes" };
+	const int nnodal = 11;
+
+	std::string elemtals[7] = { "facies", "layerglob", "claylayeri", "toprockYatmid", "rndnormE", "contentzones", "monitzones" };
+	const int nelemtal = 7;
+
+	int i;
+	int rd_id = -1; //current index for the found or not found nodal/elem. ref. distrib. (@User Data)
+	bool rdexists = false;
+	char txtbuff[200];
+
+	//Nodal
+	for (i = 0; i < nnodal; i++) {
+		rd_id = IfmGetNodalRefDistrIdByName(pDoc, nodals[i].c_str());
+		rdexists = rd_id >= 0;
+		if (!rdexists) {
+			IfmCreateNodalRefDistr(pDoc, nodals[i].c_str());
+			sprintf_s(txtbuff, 200, "PaleoSea2D model preparation :: nodal user data named '%s' was created.", nodals[i].c_str());
+			IfmInfo(pDoc, txtbuff);
+		}
+		else {
+			sprintf_s(txtbuff, 200, "PaleoSea2D model preparation :: nodal user data named '%s' already exists.", nodals[i].c_str());
+			IfmInfo(pDoc, txtbuff);
+		}
+	}
+
+	//Elemental
+	for (i = 0; i < nelemtal; i++) {
+		rd_id = IfmGetElementalRefDistrIdByName(pDoc, elemtals[i].c_str());
+		rdexists = rd_id >= 0;
+		if (!rdexists) {
+			IfmCreateElementalRefDistr(pDoc, elemtals[i].c_str());
+			sprintf_s(txtbuff, 200, "PaleoSea2D model preparation :: elemental user data named '%s' was created.", elemtals[i].c_str());
+			IfmInfo(pDoc, txtbuff);
+		}
+		else {
+			sprintf_s(txtbuff, 200, "PaleoSea2D model preparation :: elemental user data named '%s' already exists.", elemtals[i].c_str());
+			IfmInfo(pDoc, txtbuff);
+		}
+	}
+}
+
 void Cpaleosea2d::OnEditDocument (IfmDocument pDoc, Widget wParent)
 {
-  /* 
-   * TODO: Add your own code here ...
-   */
+	static IfmPropExtEnum enums[] = {
+		{ "Task 1: CREATE all required User Data", 1 },
+		{ "DO NOTHING", -1 },
+		{ 0 },
+	};
+	static int idef = -1;
+	static const char szDesc2[] = "Choice of tasks that can be run to facilitate the preparation of the FEFLOW model, which later will be simulated using the PaleoSea2D plugin.";
+
+	IfmProperty props[] = {
+		{ "Task to do", IfmPROP_ENUM, &editmenu_nEnum, &idef, szDesc2, enums },
+	};
+
+	//force default value (Do Nothing) every time for the enum property:
+	editmenu_nEnum = idef;
+
+	IfmEditProperties(pDoc, "MENU for the PaleoSea2D plugin (c) 2018 Marc Laurencelle", "", props, countof(props));
+	if (editmenu_nEnum == 1) {
+		IfmInfo(pDoc, "TASK #1 is starting...");
+		CreateUserData_forPaleoSea2D(pDoc);
+		IfmInfo(pDoc, "TASK #1 has completed successfully.");
+	}
 }
 
 ncdfheader ncdf_globtopN;
