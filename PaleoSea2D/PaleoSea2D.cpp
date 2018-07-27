@@ -1,6 +1,6 @@
 /* Infos on the plugin:
 Author and copyright: Marc Laurencelle
-Last updates: March 2018
+Last updates: July 2018
 */
 
 #include "stdifm.h"
@@ -62,7 +62,7 @@ static IfmBool OnTimeStepConstraint (IfmDocument, double, double*);
  * Enter a short description between the quotation marks in the following lines:
  */
 static const char szDesc[] = 
-  "This is Marc's elaborate plugin for running postglacial paleo-hydrogeological simulations (4rd gen. -03/2018)";
+  "This is Marc's elaborate plugin for running postglacial paleo-hydrogeological simulations (4rd gen. -07/2018)";
 
 #ifdef __cplusplus
 extern "C"
