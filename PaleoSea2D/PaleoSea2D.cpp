@@ -1321,6 +1321,7 @@ void Cpaleosea2d::PreSimulation (IfmDocument pDoc)
 	altexportusernodes = rdusrexpnod >= 0;
 	altexportautoinclgtop = false; //default early initialization
 	doexportdata = doexportdata || altexportusernodes;
+	doexportdata = true; //TEMP HARD-WIRE to make sure the altexportautoinclgtop can apply even when "exportnodes" ref. distrib. is absent. TODO SOON: Restructure the code below to better determine the export=true vs export=false scenarios.
 
 	//Management of clayyi*|clayxi* nodal | elemental markers (User Data)
 	long rdcymain = -1; //index for the 'clayyimain' nodal ref. distrib. (@User Data)
@@ -2760,12 +2761,17 @@ void Cpaleosea2d::PostTimeStep (IfmDocument pDoc)
 			ncerr = initialize_ncdf_exports(pDoc);
 			lastexporttime = currtime;
 			if (ncerr != NC_NOERR) {
-				IfmWarning(pDoc, "[Export init.] Due to error(s) during its initialization, NetCDF export is forced disabled!");
-				IfmWarning(pDoc, "** (Note: related dyn. objects may not be properly dealloc. at simul. end...)");
+				IfmWarning(pDoc, "[Export init.] Due to error(s) during its initialization, NetCDF export is forced DISABLED!");
+				IfmWarning(pDoc, "** (Note: Related dynamically allocated objects may not be properly deallocated at simul. end.)");
+				IfmWarning(pDoc, "** (The most common cause preventing creation of the output file is a MISSING 'results' FOLDER. Please verify this.)");
+				//IfmWarning(pDoc, "** (MOREOVER, note that FEFLOW + PaleoSea2D will crash soon because this is not perfectly handled yet!)");
+				/*
+				    TODO SOON: YET STILL, IT WOULD BE IMPORTANT TO VERIFY IF THE SIMUL. WORKS OKAY EVEN WHEN doexportdata == false. Is it?
+				*/
 				doexportdata = false;
 			}
 		}
-		if (isFirstExportedTS || (currtime - lastexporttime) > exportdeltatime) {
+		if (doexportdata && (isFirstExportedTS || (currtime - lastexporttime) > exportdeltatime)) {
 			ncerr = netcdf_writedata(pDoc, ncdf_globtopN);
 			if (!isFirstExportedTS) lastexporttime = lastexporttime + exportdeltatime; //To ensure more regular export times; REPLACED = currtime;
 			sprintf_s(txtbuffer, 180, "[Export] Current post-time-step results exported to the NetCDF file (at t = %.3f a) (for %zd nodes, %d CZ, and %d MZ) (gminconc = %.4g g/L) (err.code %d).", currtime / daysperyear, ncdf_globtopN.nodeindex_len, ncdf_globtopN.nbcontentzones, ncdf_globtopN.nbmonitzones, ncdf_globtopN.comp_globminc / 1000.0, ncerr);
